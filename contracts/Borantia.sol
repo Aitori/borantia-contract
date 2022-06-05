@@ -81,9 +81,6 @@ contract Borantia is Initializable, Ownable, Pausable, ERC1155 {
                 addressIsAllowlisted = true;
             }
         }
-        require(addressIsAllowlisted, "address isn't allowed");
-
-        require(balanceOf(dst, id) == 0, "address has too many tokens");
 
         _mint(dst, id, 1, "");
         _mintWorkHours(h, dst);
@@ -93,11 +90,11 @@ contract Borantia is Initializable, Ownable, Pausable, ERC1155 {
         _mint(dst, 0, h, "");
     }
 
-    function addVolunteers(uint256 id, address[] memory addresses)
+    function addVolunteer(uint256 id, address addr)
         public
         whenNotPaused
     {
-        tokenIdToVolunteers[id] = addresses;
+        tokenIdToVolunteers[id].push(addr);
     }
 
     function getVolunteerList(uint256 tokenId)
